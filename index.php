@@ -42,29 +42,34 @@
 </body>
 <script>
 
-    const fetchActivities = async () => {
-        let activities = await fetch('http://localhost/midterm/api/v1/activity.php?getAll').then(r=>r.json());
-        console.log(activities);
-        activities.forEach(activity=>{
-            const el = document.createElement('div');
-            el.innerHTML = `<div class="activity">
+    const genActivity = (activity) => {
+        const el = document.createElement('div');
+        el.innerHTML = `<div class="activity">
                     <div class="activity-icon">
                         <i class="fas fa-info"></i>
                     </div>
                     <div class="activity-title">
-                        ${activity[0]}
+                        ${activity['activity_name']}
                     </div>
                     <div class="activity-description">
-                        ${activity[1]}
+                        ${activity['activity_description']}
                     </div>
                     <div class="activity-topics">
-                        ${activity[2]}
+                        ${activity['activity_location']}
                     </div>
                 </div>`;
-            document.getElementById('activities-list').appendChild(el);
+        document.getElementById('activities-list').appendChild(el);
+    };
+
+    const fetchActivities = async () => {
+        let activities = await fetch('api/v1/activity.php?getAll').then(r=>r.json());
+        console.log(activities);
+        activities.forEach(activity=>{
+            genActivity(activity);
         });
         return activities;
-    }
+    };
+
     fetchActivities();
 </script>
 </html>

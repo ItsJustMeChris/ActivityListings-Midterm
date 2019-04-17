@@ -1,26 +1,17 @@
 <?php
 
 include_once "../../models/activity.php";
+include_once "../../objects/activity.php";
 
 
-if (isset($_GET['create']) && isset($_GET['activityDescription']) && isset($_GET['activityName']) && isset($_GET['activityLocation']))
+if (isset($_GET['create']) && isset($_GET['activityDescription']) && isset($_GET['activityName']) && isset($_GET['activityLocation']) && isset($_GET['activityType']))
 {
-    Activity::create($_GET['activityName'], $_GET['activityDescription'], $_GET['activityLocation']);
-    echo "YAY";
+    $activityData = ActivtyModel::create($_GET['activityName'], $_GET['activityDescription'], $_GET['activityLocation'], $_GET['activityType']);
+    $activity = new Activity($activityData);
+    print_r(json_encode($activity));
 }
 
 if (isset($_GET['getAll']))
 {
-    $allActivitiesReturn = Activity::getAll();
-    $allActivitiesJson = [];
-    foreach ($allActivitiesReturn as $row)
-    {
-        $activity = [];
-        $activity[] = $row['activity_name'];
-        $activity[] = $row['activity_description'];
-        $activity[] = $row['activity_location'];
-        $allActivitiesJson[] = $activity;
-    }
-
-    print_r(json_encode($allActivitiesJson));
+    print_r(json_encode(ActivtyModel::readAll()));
 }

@@ -22,7 +22,6 @@ html {
 .sub-head {
     background: #343e4a;
     height: 150px;
-    width: 100%;
     grid-area: header;
     color: #fff;
     font-size: 3rem;
